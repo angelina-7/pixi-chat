@@ -9,9 +9,11 @@ BitmapFont.from('InputFont', {
     chars: [['a', 'z'], ['0', '9'], ['A', 'Z'], ' \\|/.,:()!?@#$%^&*-_=+{}']
 });
 
+const cursor = '|';
+
 export class Input extends Container {
     private _label: string;
-    private text = new BitmapText('Your text here...', { fontName: 'InputFont' });
+    private text: BitmapText;
 
     constructor(
         private element: DisplayObject
@@ -20,7 +22,9 @@ export class Input extends Container {
 
         this.addChild(this.element);
 
-        this.text.position.set(10,10);
+        this.text = new BitmapText('', { fontName: 'InputFont' });
+        this.text.position.set(10, 10);
+        this.label = 'Your text here...';
         this.addChild(this.text);
 
         this.interactive = true;
@@ -35,12 +39,22 @@ export class Input extends Container {
     set label(value: string) {
         this._label = value;
         this.text.text = value;
-        this.text.position.set(10,10)
+        this.text.position.set(10, 10)
     }
 
 
     private onDown() {
-        this.label = '|'      
+        this.label = cursor;
+    }
+
+    handleKeyStroke(eventKey: string) {
+        const text = this.label.charAt(0) == '|' ? '' : this.label.slice(0,-1);
+        
+        if (eventKey.length == 1) {
+            this.label = text + eventKey + cursor;
+        } else if (eventKey == 'Backspace') {
+            this.label = text.slice(0, -1) + cursor;
+        }
     }
 
 }

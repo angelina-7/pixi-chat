@@ -34,7 +34,7 @@ async function init() {
     const textOutput = new TextArea(
         createPanel(insetTiles, 750, 475, 0xffffff)
     );
-    textOutput.position.set(25,25);
+    textOutput.position.set(25, 25);
 
     app.stage.addChild(textOutput);
 
@@ -42,7 +42,7 @@ async function init() {
     const inputArea = new Input(
         createPanel(bevelTiles, 575, 50, 0xffffff)
     );
-    inputArea.position.set(25,525);
+    inputArea.position.set(25, 525);
 
     app.stage.addChild(inputArea);
 
@@ -55,16 +55,18 @@ async function init() {
         createPanel(hoverTiles, 150, 50, 0xffffff),
         createPanel(insetTiles, 150, 50, -0xffffff)
     );
-    sendBtn.position.set(625,525);
+    sendBtn.position.set(625, 525);
 
     app.stage.addChild(sendBtn);
 
     function onClick() {
-        
+
     }
 
     //add keydown listener
-    
+    document.body.addEventListener('keydown', (e) => {
+        inputArea.handleKeyStroke(e.key);
+    })
 
 
     //integrate WebSocket
